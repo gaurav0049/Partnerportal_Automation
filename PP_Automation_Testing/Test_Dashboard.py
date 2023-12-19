@@ -10,7 +10,7 @@ from selenium.webdriver.support.select import Select
 
 
 @pytest.mark.usefixtures('setup')
-class Testone:
+class Test_Dashboard:
 
     def test_dashboradlanding(self):
         assert self.driver.title == "Dashboard"
@@ -78,7 +78,7 @@ class Testone:
         self.driver.find_element(By.XPATH, '//button[text()="Apply"]').click()
 
     def test_vendor_acitivity(self):
-        self.driver.execute_script()
+        pass
 
 
 
