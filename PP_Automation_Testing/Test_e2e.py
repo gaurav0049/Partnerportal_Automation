@@ -78,8 +78,8 @@ class Testone:
         self.driver.find_element(By.XPATH, '//button[text()="Apply"]').click()
 
     def test_vendor_acitivity(self):
-        pass
-    
+        self.driver.execute_script()
+
 
 
 
