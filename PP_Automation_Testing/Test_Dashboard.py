@@ -81,6 +81,7 @@ class Test_Dashboard:
 
     def test_vendor_acitivity(self):
         #Scrolling to target element :-
+
         target = self.driver.find_element(By.XPATH, "//a[text()='Load More']")
         action=ActionChains(self.driver)
         action.move_to_element(target).click().perform()

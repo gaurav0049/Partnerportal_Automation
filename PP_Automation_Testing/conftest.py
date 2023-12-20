@@ -23,6 +23,8 @@ def setup(request):
     driver.find_element(By.CSS_SELECTOR, "[name='remember']").click()
     driver.find_element(By.CSS_SELECTOR, "[type='submit']").click()
     request.cls.driver= driver
+    #yield
+    #driver.quit()
 
 
 
@@ -32,7 +34,7 @@ def setup(request):
     month_num=current_datetime.strftime("%m")
     month_name = calendar.month_name[int(month_num)]
     mon_name_year= (month_name[0:3]+" "+current_year)
-    print(mon_name_year)
+
     request.cls.mon_name_year= mon_name_year
 
 
