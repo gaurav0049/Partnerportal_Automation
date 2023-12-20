@@ -6,6 +6,8 @@ from selenium import webdriver
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 
 
@@ -78,7 +80,33 @@ class Test_Dashboard:
         self.driver.find_element(By.XPATH, '//button[text()="Apply"]').click()
 
     def test_vendor_acitivity(self):
-        pass
+        #Scrolling to target element :-
+        target = self.driver.find_element(By.XPATH, "//a[text()='Load More']")
+        action=ActionChains(self.driver)
+        action.move_to_element(target).click().perform()
+        time.sleep(2)
+        target = self.driver.find_element(By.XPATH, "//a[text()='Load More']")
+        action.move_to_element(target).click().perform()
+        #self.driver.execute_script('arguments[0].scrollIntoView(true);', target)
+
+
+         #<-----------------------Dasboard END--------------------->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
