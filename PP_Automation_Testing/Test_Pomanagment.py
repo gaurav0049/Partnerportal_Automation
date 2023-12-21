@@ -17,7 +17,7 @@ class Test_Pomangment:
         self.driver.find_element(By.CSS_SELECTOR,"span[role='presentation']").click()
         self.driver.find_element(By.CSS_SELECTOR, "input[role='searchbox']").send_keys("a")
         time.sleep(2)
-        self.driver.find_element(By.XPATH,"//ul/li[text()='Autumn Harp Business Limited']").click()
+        self.driver.find_element(By.XPATH,"//ul/li[text()='AUTUMN HARP BUSINESS LIMITED']").click()
 
         #below Code Fails Why I dont Know ??
        #vendor_list = self.driver.find_elements(By.CSS_SELECTOR, "ul li[role='option']")
@@ -33,8 +33,8 @@ class Test_Pomangment:
         self.driver.find_element(By.CSS_SELECTOR, "input[placeholder = 'Search purchase order']").send_keys("96337064")
         self.driver.find_element(By.XPATH, "//button[@type='submit']").click()
         self.driver.find_element(By.XPATH, "// a[text() = 'PO']").click()
-        title_po= (self.driver.title)
-        assert title_po== "Purchase Order"
+        title_po = (self.driver.title)
+        assert title_po == "Purchase Order"
 
 
 

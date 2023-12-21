@@ -14,7 +14,15 @@ from selenium.webdriver.support import expected_conditions as EC
 @pytest.mark.usefixtures('setup')
 class Test_Dashboard:
 
-    def test_dashboradlanding(self):
+
+    def test_dashboradlanding(self,getdata):
+        action = ActionChains(self.driver)
+        action.move_to_element(self.driver.find_element(By.XPATH, "//a[normalize-space()='Sign In']")).perform()
+        action.move_to_element(self.driver.find_element(By.CSS_SELECTOR, "[title='Company']")).click().perform()
+        self.driver.find_element(By.CSS_SELECTOR, "[name='username']").send_keys(getdata["username"])
+        self.driver.find_element(By.CSS_SELECTOR, "[name='password']").send_keys(getdata["password"])
+        self.driver.find_element(By.CSS_SELECTOR, "[name='remember']").click()
+        self.driver.find_element(By.CSS_SELECTOR, "[type='submit']").click()
         assert self.driver.title == "Dashboard"
 
     def test_dashboardcheck(self):
@@ -28,7 +36,7 @@ class Test_Dashboard:
         variable= self.driver.find_elements(By.XPATH, "//ul/li[@role='option']")
         for vendor in variable:
 
-            if vendor.text == "Autumn Harp Business Limited":
+            if vendor.text == "AUTUMN HARP BUSINESS LIMITED":
                 vendor.click()
                 break
     def test_removeselectedvendor(self):
@@ -81,19 +89,23 @@ class Test_Dashboard:
 
     def test_vendor_acitivity(self):
         #Scrolling to target element :-
-
-        target = self.driver.find_element(By.XPATH, "//a[text()='Load More']")
-        action=ActionChains(self.driver)
-        action.move_to_element(target).click().perform()
-        time.sleep(2)
-        target = self.driver.find_element(By.XPATH, "//a[text()='Load More']")
-        action.move_to_element(target).click().perform()
+        try:
+            target = self.driver.find_element(By.XPATH, "//a[text()='Load More']")
+            action=ActionChains(self.driver)
+            action.move_to_element(target).click().perform()
+            time.sleep(2)
+            target = self.driver.find_element(By.XPATH, "//a[text()='Load More']")
+            action.move_to_element(target).click().perform()
+        except:
+            print ("Load More found")
         #self.driver.execute_script('arguments[0].scrollIntoView(true);', target)
 
+    @pytest.fixture(params=[{"username": "vibinguniverse", "password": "Admin@123"}
+                            ])
+    def getdata(self, request):
+        return request.param
 
-         #<-----------------------Dasboard END--------------------->
-
-
+    # <-----------------------Dasboard END--------------------->
 
 
 

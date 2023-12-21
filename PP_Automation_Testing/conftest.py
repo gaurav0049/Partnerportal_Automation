@@ -28,14 +28,14 @@ def setup(request):
 
 
 
-    current_datetime = datetime.now()
-    current_year = current_datetime.strftime("%Y")
-    #print(current_year)
-    month_num=current_datetime.strftime("%m")
-    month_name = calendar.month_name[int(month_num)]
-    mon_name_year= (month_name[0:3]+" "+current_year)
+    #current_datetime = datetime.now()
+    #current_year = current_datetime.strftime("%Y")
+    ##print(current_year)
+    #month_num=current_datetime.strftime("%m")
+    #month_name = calendar.month_name[int(month_num)]
+    #mon_name_year= (month_name[0:3]+" "+current_year)
+    #request.cls.mon_name_year= mon_name_year
 
-    request.cls.mon_name_year= mon_name_year
 
 
 
