@@ -62,6 +62,23 @@ class Test_Pomangment:
         self.driver.find_element(By.XPATH, "//ul/li[1]/a/label/input").click()
 
         self.driver.find_element(By.CSS_SELECTOR, '''button[title="laura mercier'S"]''').click()
+        time.sleep(3)
+        self.driver.find_element(By.CSS_SELECTOR, '#product_quantity_28308').send_keys('12.34')
+        self.driver.find_element(By.CSS_SELECTOR, '#product_quantity_33040').send_keys('24.56')
+        #try:
+        #    for i in range(1,10):
+        #        self.driver.find_element(By.XPATH,"//tr[{0}]/td[6]/button".format(i)).click()
+        #except:
+        #    pass
+
+        adds= self.driver.find_elements(By.CSS_SELECTOR,"td button")
+        for add in adds:
+            add.click()
+
+
+
+
+
 
 
 
