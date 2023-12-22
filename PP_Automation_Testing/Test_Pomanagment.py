@@ -36,6 +36,40 @@ class Test_Pomangment:
         title_po = (self.driver.title)
         assert title_po == "Purchase Order"
 
+    def test_create_po(self):
+        self.driver.find_element(By.XPATH, "//a[@title='Purchase Order Management']").click()
+        self.driver.find_element(By.XPATH, "//a[@title='Purchase Orders']").click()
+        self.driver.find_element(By.XPATH,"//a[normalize-space()='Create PO']").click()
+        self.driver.find_element(By.CSS_SELECTOR,"#select2-vendor_id-container").click()
+        time.sleep(1)
+        vendors_po=self.driver.find_elements(By.CSS_SELECTOR,"ul li[role='option']")
+        for vendor in vendors_po:
+            if vendor.text == "Aircos Business name":
+                vendor.click()
+                break
+
+                #self.driver.find_element(By.CSS_SELECTOR, '#select2-input-manufracturer-container').click()
+                #manufacturers = self.driver.find_elements(By.XPATH,"//span/ul/li")
+                #for manufactur in manufacturers:
+                #    if manufactur.text == "Laura mercier":
+                #        manufactur.click()
+                #        break
+        self.driver.find_element(By.CSS_SELECTOR, '#select2-input-manufracturer-container').click()
+        self.driver.find_element(By.XPATH, "//ul/li[text()='Laura mercier']").click()
+
+        time.sleep(2)
+        self.driver.find_element(By.XPATH, "//button[@title='Select Brand(s)']").click()
+        self.driver.find_element(By.XPATH, "//ul/li[1]/a/label/input").click()
+
+        self.driver.find_element(By.CSS_SELECTOR, '''button[title="laura mercier'S"]''').click()
+
+
+
+
+
+
+
+
 
 
 
