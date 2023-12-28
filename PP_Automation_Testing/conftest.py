@@ -14,7 +14,7 @@ def setup(request):
     driver= webdriver.Chrome(options=option)
     driver.get("https://www.partnerportal.ai/")
     driver.maximize_window()
-    driver.implicitly_wait(5)
+    driver.implicitly_wait(10)
     action = ActionChains(driver)
     action.move_to_element(driver.find_element(By.XPATH, "//a[normalize-space()='Sign In']")).perform()
     action.move_to_element(driver.find_element(By.CSS_SELECTOR, "[title='Company']")).click().perform()

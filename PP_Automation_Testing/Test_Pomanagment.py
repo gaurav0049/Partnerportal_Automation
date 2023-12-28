@@ -6,6 +6,8 @@ from selenium import webdriver
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 
 @pytest.mark.usefixtures('setup')
@@ -37,6 +39,7 @@ class Test_Pomangment:
         assert title_po == "Purchase Order"
 
     def test_create_po(self):
+        wait = WebDriverWait(self.driver, 15)
         self.driver.find_element(By.XPATH, "//a[@title='Purchase Order Management']").click()
         self.driver.find_element(By.XPATH, "//a[@title='Purchase Orders']").click()
         self.driver.find_element(By.XPATH,"//a[normalize-space()='Create PO']").click()
@@ -67,17 +70,71 @@ class Test_Pomangment:
         self.driver.find_element(By.CSS_SELECTOR, '#product_quantity_33040').send_keys('24.56')
         #try:
         #    for i in range(1,10):
-        #        self.driver.find_element(By.XPATH,"//tr[{0}]/td[6]/button".format(i)).click()
+        #       self.driver.find_element(By.XPATH,"//tr[{0}]/td[6]/button".format(i)).click()
         #except:
         #    pass
 
         adds= self.driver.find_elements(By.CSS_SELECTOR,"td button")
         for add in adds:
+            time.sleep(2)
             add.click()
 
+        time.sleep(2)
+        self.driver.find_element(By.XPATH,"//div/i[@class='fa fa-shopping-cart']").click()
+        time.sleep(2)
 
 
+        self.driver.find_element(By.XPATH,"//tr[1]/td[8]").click()
 
+        self.driver.find_element(By.XPATH, "//ul/li[text()='AirWH']").click()
+        time.sleep(6)
+
+        #wait.until(EC.presence_of_element_located((By.XPATH, "//tr[2]/td[8]")))
+
+        self.driver.find_element(By.XPATH, "//tr[2]/td[8]").click()
+
+        self.driver.find_element(By.XPATH, "//ul/li[text()='AirWH']").click()
+
+        wait.until(EC.presence_of_element_located((By.XPATH,"//input[@name='submit']")))
+        time.sleep(6)
+
+        #for loc in vendor_loc:
+        #    time.sleep(5)
+        #    action.move_to_element(loc).click().perform()
+        #    time.sleep(2)
+        #    action.move_to_element(self.driver.find_element(By.XPATH, "//ul/li[text()='AirWH']")).click().perform()
+        #time.sleep(5)
+        self.driver.find_element(By.XPATH,"//input[@name='submit']").click()
+
+
+        wait.until(EC.presence_of_element_located((By.XPATH, "//div[@class='alert alert-success alert-dismissible']")))
+
+        success_po_create = (self.driver.find_element
+                             (By.XPATH, "//div[@class='alert alert-success alert-dismissible']").text)
+        assert "created successfully" in success_po_create
+
+
+    def test_reject_po(self):
+        self.driver.find_element(By.XPATH, "//a[@title='Purchase Order Management']").click()
+        self.driver.find_element(By.XPATH, "//a[@title='Purchase Orders']").click()
+        self.driver.find_element(By.XPATH,"//tr[1]/td[10]/a").click()
+        self.driver.find_element(By.XPATH, "//button[@name='submit'][normalize-space()='Reject']").click()
+        time.sleep(2)
+
+
+        self.driver.find_element(By.XPATH,"//textarea[@name='purchase_order_company_reject_reason']").send_keys("Automated Test Rejection")
+
+        self.driver.find_element(By.XPATH, "//button[@class='btn btn-primary btn-submit-company-reject-purchase-order-form-with-reason-event']").click()
+
+
+        wait=WebDriverWait(self.driver,15)
+        wait.until(EC.presence_of_element_located((By.XPATH,
+                                                   "//div[@class='alert alert-success alert-dismissible']")))
+        success_message = self.driver.find_element(By.XPATH,
+                                                   "//div[@class='alert alert-success alert-dismissible']").text
+
+        assert "rejected successfully" in success_message
+        print(success_message)
 
 
 
