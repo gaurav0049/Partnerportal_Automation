@@ -51,8 +51,8 @@ class Test_Dashboard:
     def test_customoption(self):
         date_filtercc = Select(self.driver.find_element(By.CSS_SELECTOR, "#ChoosePastHistory"))
         date_filtercc.select_by_visible_text('Custom Option')
-        self.driver.find_element(By.CSS_SELECTOR,"[name='customDateFilter']").clear()
-        self.driver.find_element(By.CSS_SELECTOR,"[name='customDateFilter']").send_keys("01/14/2024 - 01/25/2024")
+        self.driver.find_element(By.CSS_SELECTOR, "[name='customDateFilter']").clear()
+        self.driver.find_element(By.CSS_SELECTOR, "[name='customDateFilter']").send_keys("01/14/2024 - 01/25/2024")
 
 
     def test_customoption_check(self):

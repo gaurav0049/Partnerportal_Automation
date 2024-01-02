@@ -9,10 +9,15 @@ from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+from PP_Automation_Testing.Baseclass import Logging
 
+obj=Logging()
 @pytest.mark.usefixtures('setup')
-class Test_Pomangment:
+class Test_Pomangment():
+    log=obj.get_logger()
+
     def test_button(self):
+        #log = self.get_logger()
         self.driver.implicitly_wait(5)
         self.driver.find_element(By.XPATH,"//a[@title='Purchase Order Management']").click()
         self.driver.find_element(By.XPATH, "//a[@title='Purchase Orders']").click()
@@ -20,6 +25,8 @@ class Test_Pomangment:
         self.driver.find_element(By.CSS_SELECTOR, "input[role='searchbox']").send_keys("a")
         time.sleep(2)
         self.driver.find_element(By.XPATH,"//ul/li[text()='AUTUMN HARP BUSINESS LIMITED']").click()
+        self.log.info("Dropdown Check Successfully")
+
 
         #below Code Fails Why I dont Know ??
        #vendor_list = self.driver.find_elements(By.CSS_SELECTOR, "ul li[role='option']")
@@ -29,6 +36,7 @@ class Test_Pomangment:
        #    if vendor.text == "Autumn Harp Business Limited":
        #        vendor.click()
     def test_include_close_checkbox(self):
+        #log = self.get_logger()
         self.driver.find_element(By.XPATH, "//a[@title='Purchase Order Management']").click()
         self.driver.find_element(By.XPATH, "//a[@title='Purchase Orders']").click()
         self.driver.find_element(By.CSS_SELECTOR,"label input[type='checkbox']").click()
@@ -37,6 +45,7 @@ class Test_Pomangment:
         self.driver.find_element(By.XPATH, "// a[text() = 'PO']").click()
         title_po = (self.driver.title)
         assert title_po == "Purchase Order"
+        self.log.info("checked Closed Box")
 
     def test_create_po(self):
         wait = WebDriverWait(self.driver, 15)
@@ -128,7 +137,7 @@ class Test_Pomangment:
 
 
         wait=WebDriverWait(self.driver,15)
-        wait.until(EC.presence_of_element_located((By.XPATH,
+        self.wait.until(EC.presence_of_element_located((By.XPATH,
                                                    "//div[@class='alert alert-success alert-dismissible']")))
         success_message = self.driver.find_element(By.XPATH,
                                                    "//div[@class='alert alert-success alert-dismissible']").text
