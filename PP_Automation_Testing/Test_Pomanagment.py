@@ -18,6 +18,7 @@ class Test_Pomangment():
     log=obj.get_logger()
     x_path_of_pom= "//a[@title='Purchase Order Management']"
     x_path_of_po="//a[@title='Purchase Orders']"
+    exportButton="div button[title='Export']"
 
     def test_button(self):
         #log = self.get_logger()
@@ -56,8 +57,8 @@ class Test_Pomangment():
 
     def test_create_po(self):
         wait = WebDriverWait(self.driver, 15)
-        self.driver.find_element(By.XPATH, "//a[@title='Purchase Order Management']").click()
-        self.driver.find_element(By.XPATH, "//a[@title='Purchase Orders']").click()
+        self.driver.find_element(By.XPATH, self.x_path_of_pom).click()
+        self.driver.find_element(By.XPATH, self.x_path_of_po).click()
         self.driver.find_element(By.XPATH,"//a[normalize-space()='Create PO']").click()
         self.driver.find_element(By.CSS_SELECTOR,"#select2-vendor_id-container").click()
         time.sleep(1)
@@ -101,38 +102,32 @@ class Test_Pomangment():
 
 
         self.driver.find_element(By.XPATH,"//tr[1]/td[8]").click()
-
         self.driver.find_element(By.XPATH, "//ul/li[text()='AirWH']").click()
         time.sleep(6)
+
 
         #wait.until(EC.presence_of_element_located((By.XPATH, "//tr[2]/td[8]")))
 
         self.driver.find_element(By.XPATH, "//tr[2]/td[8]").click()
-
         self.driver.find_element(By.XPATH, "//ul/li[text()='AirWH']").click()
 
-        wait.until(EC.presence_of_element_located((By.XPATH,"//input[@name='submit']")))
+        wait.until(EC.presence_of_element_located((By.XPATH, "//input[@name='submit']")))
         time.sleep(6)
 
-        #for loc in vendor_loc:
+        # for loc in vendor_loc:
         #    time.sleep(5)
         #    action.move_to_element(loc).click().perform()
         #    time.sleep(2)
         #    action.move_to_element(self.driver.find_element(By.XPATH, "//ul/li[text()='AirWH']")).click().perform()
-        #time.sleep(5)
-        self.driver.find_element(By.XPATH,"//input[@name='submit']").click()
-
-
-        wait.until(EC.presence_of_element_located((By.XPATH, "//div[@class='alert alert-success alert-dismissible']")))
-
+        # time.sleep(5)
+        self.driver.find_element(By.XPATH, "//input[@name='submit']").click()
         success_po_create = (self.driver.find_element
                              (By.XPATH, "//div[@class='alert alert-success alert-dismissible']").text)
         assert "created successfully" in success_po_create
 
-
     def test_reject_po(self):
-        self.driver.find_element(By.XPATH, "//a[@title='Purchase Order Management']").click()
-        self.driver.find_element(By.XPATH, "//a[@title='Purchase Orders']").click()
+        self.driver.find_element(By.XPATH,self.x_path_of_pom).click()
+        self.driver.find_element(By.XPATH,self.x_path_of_po).click()
         i = 1
         while True:
             status = self.driver.find_element(By.XPATH, "//tr[{0}]/td[6]/span".format(i)).text
@@ -182,6 +177,61 @@ class Test_Pomangment():
 
         assert "closed successfully" in success_message
         print(success_message)
+
+    def test_ExportButton(self):
+        self.driver.find_element(By.XPATH, self.x_path_of_pom).click()
+        self.driver.find_element(By.XPATH, self.x_path_of_po).click()
+        self.driver.find_element(By.CSS_SELECTOR,self.exportButton).click()
+        self.log.info("Export Button Tested")
+    def test_check_IR_Button(self):
+        self.driver.find_element(By.XPATH, self.x_path_of_pom).click()
+        self.driver.find_element(By.XPATH, self.x_path_of_po).click()
+        IRS=self.driver.find_elements(By.XPATH,"//tr/td[10]/a[2]")
+        for IR in IRS:
+            IR.click()
+            break
+        IR_view=self.driver.find_elements(By.XPATH,"//tr/td[9]/a")
+        for single_IR in IR_view:
+            single_IR.click()
+            break
+        self.log.info("IR and View Button Checked")
+
+    def test_po_wise_View_button(self):
+        self.driver.find_element(By.XPATH, self.x_path_of_pom).click()
+        self.driver.find_element(By.XPATH, self.x_path_of_po).click()
+        i = 1
+        while True:
+            po_number = self.driver.find_element(By.XPATH, "//tr[{0}]/td[3]".format(i)).text
+
+            if po_number == "71005631":
+                self.driver.find_element(By.XPATH, "//tr[{0}]/td[10]/a[2]".format(i)).click()
+                break
+            else:
+                i = i + 1
+
+        #po_numbers = self.driver.find_elements(By.XPATH, "//tr")
+        #for po_num in po_numbers:
+        #    po_No= po_num.find_element(By.XPATH,"td[3]").text
+        #    if po_No== "PO70014604258":
+        #        po_num.find_element(By.XPATH,"td[10]/a[2]").click()
+        #    break
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
