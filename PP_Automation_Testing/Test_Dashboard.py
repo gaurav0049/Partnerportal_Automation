@@ -59,6 +59,8 @@ class Test_Dashboard:
         self.driver.implicitly_wait(5)
         month_Year_left= "Feb 2023"
         month_year_right="Sep 2023"
+        date_filtercc = Select(self.driver.find_element(By.CSS_SELECTOR, "#ChoosePastHistory"))
+        date_filtercc.select_by_visible_text('Custom Option')
 
 
         self.driver.find_element(By.CSS_SELECTOR, "[name='customDateFilter']").clear()

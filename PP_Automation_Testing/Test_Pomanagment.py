@@ -14,15 +14,22 @@ from PP_Automation_Testing.Baseclass import Logging
 obj=Logging()
 @pytest.mark.usefixtures('setup')
 class Test_Pomangment():
+
     log=obj.get_logger()
+    x_path_of_pom= "//a[@title='Purchase Order Management']"
+    x_path_of_po="//a[@title='Purchase Orders']"
 
     def test_button(self):
         #log = self.get_logger()
         self.driver.implicitly_wait(5)
         self.driver.find_element(By.XPATH,"//a[@title='Purchase Order Management']").click()
+        self.log.info("Po Management Button check")
         self.driver.find_element(By.XPATH, "//a[@title='Purchase Orders']").click()
+        self.log.info("Purchase order button check")
         self.driver.find_element(By.CSS_SELECTOR,"span[role='presentation']").click()
+        self.log.info("Dropdown Check Successfully of vendor")
         self.driver.find_element(By.CSS_SELECTOR, "input[role='searchbox']").send_keys("a")
+        self.log.info("Vendor input Area field check")
         time.sleep(2)
         self.driver.find_element(By.XPATH,"//ul/li[text()='AUTUMN HARP BUSINESS LIMITED']").click()
         self.log.info("Dropdown Check Successfully")
@@ -126,7 +133,15 @@ class Test_Pomangment():
     def test_reject_po(self):
         self.driver.find_element(By.XPATH, "//a[@title='Purchase Order Management']").click()
         self.driver.find_element(By.XPATH, "//a[@title='Purchase Orders']").click()
-        self.driver.find_element(By.XPATH,"//tr[1]/td[10]/a").click()
+        i = 1
+        while True:
+            status = self.driver.find_element(By.XPATH, "//tr[{0}]/td[6]/span".format(i)).text
+
+            if status == "Pending" or status == "Pending Approval":
+                self.driver.find_element(By.XPATH, "//tr[{0}]/td[10]/a[text()='PO']".format(i)).click()
+                break
+            else:
+                i = i + 1
         self.driver.find_element(By.XPATH, "//button[@name='submit'][normalize-space()='Reject']").click()
         time.sleep(2)
 
@@ -137,13 +152,47 @@ class Test_Pomangment():
 
 
         wait=WebDriverWait(self.driver,15)
-        self.wait.until(EC.presence_of_element_located((By.XPATH,
+        wait.until(EC.presence_of_element_located((By.XPATH,
                                                    "//div[@class='alert alert-success alert-dismissible']")))
         success_message = self.driver.find_element(By.XPATH,
                                                    "//div[@class='alert alert-success alert-dismissible']").text
 
         assert "rejected successfully" in success_message
         print(success_message)
+
+    def test_Close_po(self):
+        self.driver.find_element(By.XPATH,self.x_path_of_pom).click()
+        self.driver.find_element(By.XPATH,self.x_path_of_po).click()
+        i=1
+        while True:
+            status= self.driver.find_element(By.XPATH,"//tr[{0}]/td[6]/span".format(i)).text
+
+            if status== "Pending" or status== "Pending Approval":
+                self.driver.find_element(By.XPATH,"//tr[{0}]/td[10]/a[text()='PO']".format(i)).click()
+                break
+            else:
+                i = i + 1
+
+        self.driver.find_element(By.XPATH, "//button[text()='Close PO']").click()
+        wait = WebDriverWait(self.driver, 15)
+        wait.until(EC.presence_of_element_located((By.XPATH,
+                                                   "//div[@class='alert alert-success alert-dismissible']")))
+        success_message = self.driver.find_element(By.XPATH,
+                                                   "//div[@class='alert alert-success alert-dismissible']").text
+
+        assert "closed successfully" in success_message
+        print(success_message)
+
+
+
+
+
+
+
+
+
+
+
 
 
 
