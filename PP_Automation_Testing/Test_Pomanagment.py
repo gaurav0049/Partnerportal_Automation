@@ -200,14 +200,23 @@ class Test_Pomangment():
         self.driver.find_element(By.XPATH, self.x_path_of_pom).click()
         self.driver.find_element(By.XPATH, self.x_path_of_po).click()
         i = 1
-        while True:
-            po_number = self.driver.find_element(By.XPATH, "//tr[{0}]/td[3]".format(i)).text
 
-            if po_number == "71005631":
-                self.driver.find_element(By.XPATH, "//tr[{0}]/td[10]/a[2]".format(i)).click()
+        while True:
+            for i in range(1,26):
+                po_number = self.driver.find_element(By.XPATH, "//tr[{0}]/td[3]".format(i)).text
+
+                if po_number == "36006008":
+                    self.driver.find_element(By.XPATH, "//tr[{0}]/td[10]/a[2]".format(i)).click()
+                    break
+
+            if po_number== "36006008":
                 break
-            else:
-                i = i + 1
+            NextButton = self.driver.find_element(By.XPATH, "//a[normalize-space()='Next']")
+            self.driver.execute_script("arguments[0].scrollIntoView();", NextButton)
+            self.driver.find_element(By.XPATH, "//a[normalize-space()='Next']").click()
+
+
+
 
         #po_numbers = self.driver.find_elements(By.XPATH, "//tr")
         #for po_num in po_numbers:

@@ -19,7 +19,7 @@ def setup(request):
     action.move_to_element(driver.find_element(By.XPATH, "//a[normalize-space()='Sign In']")).perform()
     action.move_to_element(driver.find_element(By.CSS_SELECTOR, "[title='Company']")).click().perform()
     driver.find_element(By.CSS_SELECTOR,"[name='username']").send_keys("vibinguniverse")
-    driver.find_element(By.CSS_SELECTOR, "[name='password']").send_keys("Admin@123")
+    driver.find_element(By.CSS_SELECTOR, "[name='password']").send_keys("123123")
     driver.find_element(By.CSS_SELECTOR, "[name='remember']").click()
     driver.find_element(By.CSS_SELECTOR, "[type='submit']").click()
     request.cls.driver= driver
