@@ -9,6 +9,8 @@ from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+
+
 from PP_Automation_Testing.Baseclass import Logging
 
 obj=Logging()
@@ -199,6 +201,7 @@ class Test_Pomangment():
     def test_po_wise_View_button(self):
         self.driver.find_element(By.XPATH, self.x_path_of_pom).click()
         self.driver.find_element(By.XPATH, self.x_path_of_po).click()
+
         i = 1
 
         while True:
