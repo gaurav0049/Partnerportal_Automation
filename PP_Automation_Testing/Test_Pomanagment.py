@@ -21,10 +21,13 @@ class Test_Pomangment():
     x_path_of_pom= "//a[@title='Purchase Order Management']"
     x_path_of_po="//a[@title='Purchase Orders']"
     exportButton="div button[title='Export']"
+    x_path_shipment="//span[normalize-space()='Shipments']"
+
+
 
     def test_button(self):
         #log = self.get_logger()
-        self.driver.implicitly_wait(5)
+        self.driver.implicitly_wait(10)
         self.driver.find_element(By.XPATH,"//a[@title='Purchase Order Management']").click()
         self.log.info("Po Management Button check")
         self.driver.find_element(By.XPATH, "//a[@title='Purchase Orders']").click()
@@ -245,6 +248,70 @@ class Test_Pomangment():
             self.driver.execute_script("arguments[0].scrollIntoView(true);",receive_button)
             receive_button.click()
             break
+        input_box=self.driver.find_element(By.XPATH,"//tr[1]/td[4]/input")
+        input_box.clear()
+        input_box.send_keys("1.23")
+
+    def test_document_download(self):
+        self.driver.find_element(By.XPATH, self.x_path_of_pom).click()
+        self.driver.find_element(By.XPATH, self.x_path_of_po).click()
+        Receives = self.driver.find_elements(By.XPATH, "//tr/td[10]/a[2][text()='Receive']")
+        for receive in Receives:
+            receive.click()
+            document_button= self.driver.find_element(By.XPATH,"//tr[1]/td[10]/button")
+            self.driver.execute_script("arguments[0].scrollIntoView(true);", document_button)
+            document_button.click()
+            self.driver.find_element(By.XPATH,"//tr[1]/td[3]/a").click()
+            self.driver.find_element(By.XPATH,"//div[@id='vendor-sale-shipping-order-documents-modal']//button[@type='button'][normalize-space()='×']").click()
+            self.log.info("Document download button check")
+            break
+
+    def test_shipment(self):
+        self.driver.implicitly_wait(10)
+        self.driver.find_element(By.XPATH, self.x_path_of_pom).click()
+        self.driver.find_element(By.XPATH, self.x_path_shipment).click()
+        self.driver.find_element(By.CSS_SELECTOR,"#select2-shipment_vendor_list-container").click()
+        self.driver.find_element(By.XPATH,"//span/span/span/input").send_keys("air")
+        self.driver.find_element(By.XPATH,"//ul/li[text()='Aircos Business name']").click()
+        time.sleep(4)
+        self.driver.find_element(By.XPATH,"//tr[1]/td[3]/a").click()
+        self.driver.back()
+        time.sleep(2)
+        self.driver.find_element(By.XPATH,"//tr[1]/td[4]/a").click()
+        self.driver.back()
+        search= self.driver.find_element(By.CSS_SELECTOR,"label input")
+        search.send_keys("135")
+        search.clear()
+
+        self.driver.find_element(By.XPATH,"//tr/td[11]/button").click()
+        self.driver.find_element(By.XPATH,"//button[@aria-label='Close']").click()
+        self.driver.find_element(By.XPATH,"//tr/td[11]/a").click()
+
+    def test_view_page_Button(self):
+        self.driver.find_element(By.XPATH, self.x_path_of_pom).click()
+        self.driver.find_element(By.XPATH, self.x_path_shipment).click()
+        #status=self.driver.find_element(By.XPATH,"//tr[1]/td[10]").text
+        #print(status)
+        i=1
+        while True:
+            while True:
+                status=self.driver.find_element(By.XPATH,"//tr[{0}]/td[10]".format(i)).text
+                if status=="Shipped":
+                    self.driver.find_element(By.XPATH,"//tr[{0}]/td[11]/button".format(i)).click()
+                    break
+                else:
+                    i=i+1
+
+            if status == "Shipped":
+                break
+            nextpage = self.driver.find_element(By.XPATH, "(//a[@href='#'])[9]")
+            self.driver.execute_script("arguments[0].scrollIntoView(true);", nextpage)
+            nextpage.click()
+
+
+
+
+
 
 
 
