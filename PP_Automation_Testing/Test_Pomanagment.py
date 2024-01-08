@@ -218,15 +218,40 @@ class Test_Pomangment():
             self.driver.execute_script("arguments[0].scrollIntoView();", NextButton)
             self.driver.find_element(By.XPATH, "//a[normalize-space()='Next']").click()
 
-
-
-
         #po_numbers = self.driver.find_elements(By.XPATH, "//tr")
         #for po_num in po_numbers:
         #    po_No= po_num.find_element(By.XPATH,"td[3]").text
         #    if po_No== "PO70014604258":
         #        po_num.find_element(By.XPATH,"td[10]/a[2]").click()
         #    break
+
+    def test_check_po_id_link(self):
+        self.driver.find_element(By.XPATH, self.x_path_of_pom).click()
+        self.driver.find_element(By.XPATH, self.x_path_of_po).click()
+        po_id= self.driver.find_element(By.XPATH,"//tr[1]/td[2]/a")
+        po_number_list_page=po_id.text
+        po_id.click()
+        po_num_detail_page=self.driver.find_element(By.TAG_NAME,'h1').text
+        assert po_number_list_page in po_num_detail_page
+        self.log.info("The Po link Checked")
+
+    def test_receive_button(self):
+        self.driver.find_element(By.XPATH, self.x_path_of_pom).click()
+        self.driver.find_element(By.XPATH, self.x_path_of_po).click()
+        Receives = self.driver.find_elements(By.XPATH, "//tr/td[10]/a[2][text()='Receive']")
+        for receive in Receives:
+            receive.click()
+            receive_button=self.driver.find_element(By.XPATH,"//a[text()='Receive Item']")
+            self.driver.execute_script("arguments[0].scrollIntoView(true);",receive_button)
+            receive_button.click()
+            break
+
+
+
+
+
+
+
 
 
 
