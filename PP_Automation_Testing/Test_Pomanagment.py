@@ -13,10 +13,10 @@ from selenium.webdriver.support import expected_conditions as EC
 
 from PP_Automation_Testing.Baseclass import Logging
 
-obj=Logging()
+
 @pytest.mark.usefixtures('setup')
 class Test_Pomangment():
-
+    obj = Logging()  # object Creation
     log=obj.get_logger()
     x_path_of_pom= "//a[@title='Purchase Order Management']"
     x_path_of_po="//a[@title='Purchase Orders']"
