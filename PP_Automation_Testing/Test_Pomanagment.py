@@ -22,6 +22,7 @@ class Test_Pomangment():
     x_path_of_po="//a[@title='Purchase Orders']"
     exportButton="div button[title='Export']"
     x_path_shipment="//span[normalize-space()='Shipments']"
+    Css_item_receipt="[title='Item Receipts']"
 
 
 
@@ -307,6 +308,92 @@ class Test_Pomangment():
             nextpage = self.driver.find_element(By.XPATH, "(//a[@href='#'])[9]")
             self.driver.execute_script("arguments[0].scrollIntoView(true);", nextpage)
             nextpage.click()
+
+    def test_view_bill_Button(self):
+        self.driver.find_element(By.XPATH, self.x_path_of_pom).click()
+        self.driver.find_element(By.XPATH, self.x_path_shipment).click()
+        #status=self.driver.find_element(By.XPATH,"//tr[1]/td[10]").text
+        #print(status)
+        i=1
+        while True:
+            for i in range(1,11):
+                status=self.driver.find_element(By.XPATH,"//tr[{0}]/td[10]".format(i)).text
+                if status=="Shipped":
+                    self.driver.find_element(By.XPATH,"//tr[{}]/td[11]/a/span[normalize-space()='Bill']".format(i)).click()
+                    break
+                else:
+                    continue
+
+            if status == "Shipped":
+                break
+            nextpage = self.driver.find_element(By.XPATH, "(//a[@href='#'])[9]")
+            self.driver.execute_script("arguments[0].scrollIntoView(true);", nextpage)
+            nextpage.click()
+
+    def test_view_Variance_Button(self):
+        self.driver.find_element(By.XPATH, self.x_path_of_pom).click()
+        self.driver.find_element(By.XPATH, self.x_path_shipment).click()
+    #    #status=self.driver.find_element(By.XPATH,"//tr[1]/td[10]").text
+    #    #print(status)
+    #    i=1
+    #    for j in range(4):
+    #        for i in range(1,11):
+    #            try:
+    #                varbutton=self.driver.find_element(By.XPATH, "//tr[{}]/td[11]/a/span[text()='Variance']".format(i))
+    #                self.driver.execute_script('arguments[0].scrollIntoView(true);',varbutton)
+    #                varbutton.click()
+    #            except:
+    #                continue
+
+            #    else:
+            #        continue
+#
+            #if self.driver.find_element(By.TAG_NAME,'h4').text=="Received Items":
+            #   break
+            #else:
+        nextpage = self.driver.find_element(By.XPATH, "(//a[@href='#'])[9]")
+        self.driver.execute_script("arguments[0].scrollIntoView(true);", nextpage)
+        nextpage.click()
+
+    def test_check_Variance_Button(self):
+        self.driver.find_element(By.XPATH, self.x_path_of_pom).click()
+        self.driver.find_element(By.XPATH, self.x_path_shipment).click()
+        element=self.driver.find_element(By.XPATH, "//tr[9]/td[11]/a/span[text()='Variance']")
+        self.driver.execute_script('arguments[0].scrollIntoView(true);',element)
+        print(element.is_displayed())
+
+    def test_check_item_receipt(self):
+        self.driver.find_element(By.XPATH, self.x_path_of_pom).click()
+        self.driver.find_element(By.CSS_SELECTOR,self.Css_item_receipt).click()
+        for i in range(1,26):
+            po_id= self.driver.find_element(By.XPATH,"//tr[{}]/td[2]/a".format(i)).text
+            self.driver.find_element(By.XPATH, "//tr[{}]/td[2]/a".format(i)).click()
+
+            self.driver.back()
+
+            ir_number= self.driver.find_element(By.XPATH,"//tr[{}]/td[3]/a".format(i)).text
+            self.driver.find_element(By.XPATH, "//tr[{}]/td[3]/a".format(i)).click()
+
+            self.driver.back()
+            self.driver.find_element(By.XPATH, "//tr[{}]/td[9]/a".format(i)).click()
+
+            heading= self.driver.find_element(By.TAG_NAME,'h1').text
+            break
+            assert heading.is_displayed()
+            self.log.info("Details check")
+            assert po_id in heading
+            assert ir_number in heading
+
+
+
+
+
+
+
+
+
+
+
 
 
 
