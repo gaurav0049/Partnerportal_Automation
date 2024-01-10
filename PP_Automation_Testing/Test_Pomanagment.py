@@ -379,10 +379,11 @@ class Test_Pomangment():
 
             heading= self.driver.find_element(By.TAG_NAME,'h1').text
             break
-            assert heading.is_displayed()
-            self.log.info("Details check")
-            assert po_id in heading
-            assert ir_number in heading
+
+        self.log.info("Details check")
+        print(po_id,ir_number,heading)
+        assert po_id in heading
+        assert ir_number in heading
 
 
 
