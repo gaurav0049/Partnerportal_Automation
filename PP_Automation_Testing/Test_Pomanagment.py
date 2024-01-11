@@ -385,6 +385,46 @@ class Test_Pomangment():
         assert po_id in heading
         assert ir_number in heading
 
+    def test_searchBox_itemreceipt(self):
+        self.driver.find_element(By.XPATH, self.x_path_of_pom).click()
+        self.driver.find_element(By.CSS_SELECTOR, self.Css_item_receipt).click()
+        self.driver.find_element(By.CSS_SELECTOR,"[name='searchText']").send_keys('Aircos')
+        self.driver.find_element(By.CSS_SELECTOR, "[type='submit']").click()
+
+    def test_pagination(self):
+        self.driver.find_element(By.XPATH, self.x_path_of_pom).click()
+        self.driver.find_element(By.CSS_SELECTOR, self.Css_item_receipt).click()
+        next=self.driver.find_element(By.XPATH,"//a[normalize-space()='Next']")
+        for i in range(3):
+            time.sleep(2)
+            next = self.driver.find_element(By.XPATH, "//a[normalize-space()='Next']")
+            self.driver.execute_script('arguments[0].scrollIntoView(true);',next)
+            next.click()
+    def test_sorting(self):
+        self.driver.find_element(By.XPATH, self.x_path_of_pom).click()
+        self.driver.find_element(By.CSS_SELECTOR, self.Css_item_receipt).click()
+        self.driver.find_element(By.XPATH, "//tr/th[7]/a").click()
+        list_before_sorting=self.driver.find_elements(By.XPATH,"//tr/td[7]")
+        date_before_sort=[]
+        for date in list_before_sorting:
+            date_text=date.text
+            date_before_sort.append(date_text)
+        self.driver.find_element(By.XPATH,"//tr/th[7]/a").click()
+        self.driver.find_element(By.XPATH, "//tr/th[7]/a").click()
+        list_after_sorting=self.driver.find_elements(By.XPATH,"//tr/td[7]")
+        date_after_sort = []
+        for date in list_after_sorting:
+            date_texts = date.text
+            date_after_sort.append(date_texts)
+        print(date_after_sort)
+        print(date_before_sort)
+        assert date_after_sort == date_before_sort
+
+
+
+
+
+
 
 
 
