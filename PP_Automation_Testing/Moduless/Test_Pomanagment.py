@@ -11,10 +11,10 @@ from selenium.webdriver.support import expected_conditions as EC
 
 
 
-from PP_Automation_Testing.Baseclass import Logging
+from PP_Automation_Testing.logging.Baseclass import Logging
 
 
-@pytest.mark.usefixtures('setup')
+
 class Test_Pomangment():
     obj = Logging()  # object Creation
     log=obj.get_logger()
@@ -23,9 +23,8 @@ class Test_Pomangment():
     exportButton="div button[title='Export']"
     x_path_shipment="//span[normalize-space()='Shipments']"
     Css_item_receipt="[title='Item Receipts']"
-
-
-
+    def __init__(self,driver):
+        self.driver=driver
     def test_button(self):
         #log = self.get_logger()
         self.driver.implicitly_wait(10)

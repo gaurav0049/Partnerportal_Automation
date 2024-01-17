@@ -11,18 +11,19 @@ from selenium.webdriver.support import expected_conditions as EC
 
 
 
-@pytest.mark.usefixtures('setup')
 class Test_Dashboard:
+    def __init__(self,driver):
+        self.driver=driver
 
 
-    def test_dashboradlanding(self,getdata):
-        action = ActionChains(self.driver)
-        action.move_to_element(self.driver.find_element(By.XPATH, "//a[normalize-space()='Sign In']")).perform()
-        action.move_to_element(self.driver.find_element(By.CSS_SELECTOR, "[title='Company']")).click().perform()
-        self.driver.find_element(By.CSS_SELECTOR, "[name='username']").send_keys(getdata["username"])
-        self.driver.find_element(By.CSS_SELECTOR, "[name='password']").send_keys(getdata["password"])
-        self.driver.find_element(By.CSS_SELECTOR, "[name='remember']").click()
-        self.driver.find_element(By.CSS_SELECTOR, "[type='submit']").click()
+    def test_dashboradlanding(self):
+        #action = ActionChains(self.driver)
+        #action.move_to_element(self.driver.find_element(By.XPATH, "//a[normalize-space()='Sign In']")).perform()
+        #action.move_to_element(self.driver.find_element(By.CSS_SELECTOR, "[title='Company']")).click().perform()
+        #self.driver.find_element(By.CSS_SELECTOR, "[name='username']").send_keys(getdata["username"])
+        #self.driver.find_element(By.CSS_SELECTOR, "[name='password']").send_keys(getdata["password"])
+        #self.driver.find_element(By.CSS_SELECTOR, "[name='remember']").click()
+        #self.driver.find_element(By.CSS_SELECTOR, "[type='submit']").click()
         assert self.driver.title == "Dashboard"
 
     def test_dashboardcheck(self):
@@ -102,10 +103,10 @@ class Test_Dashboard:
             print ("Load More found")
         #self.driver.execute_script('arguments[0].scrollIntoView(true);', target)
 
-    @pytest.fixture(params=[{"username": "vibinguniverse", "password": "Admin@123"}
-                            ])
-    def getdata(self, request):
-        return request.param
+    #@pytest.fixture(params=[{"username": "vibinguniverse", "password": "Admin@123"}
+    #                        ])
+    #def getdata(self, request):
+    #    return request.param
 
     # <-----------------------Dasboard END--------------------->
 
