@@ -50,8 +50,8 @@ class Test_Pomangment():
        #        vendor.click()
     def test_include_close_checkbox(self):
         #log = self.get_logger()
-        self.driver.find_element(By.XPATH, "//a[@title='Purchase Order Management']").click()
-        self.driver.find_element(By.XPATH, "//a[@title='Purchase Orders']").click()
+        self.driver.find_element(By.XPATH, self.x_path_of_pom).click()
+        self.driver.find_element(By.XPATH, self.x_path_of_po).click()
         self.driver.find_element(By.CSS_SELECTOR,"label input[type='checkbox']").click()
         self.driver.find_element(By.CSS_SELECTOR, "input[placeholder = 'Search purchase order']").send_keys("96337064")
         self.driver.find_element(By.XPATH, "//button[@type='submit']").click()

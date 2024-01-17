@@ -5,6 +5,9 @@ from PP_Automation_Testing.Moduless.Test_Pomanagment import Test_Pomangment
 
 @pytest.mark.usefixtures('setup')
 class Test_all:
+    def test_dashboard(self):
+        self.obj1=Test_Dashboard(self.driver)
+        self.obj1.test_dashboradlanding()
 
     def test_Pomangment(self):
         self.obj= Test_Pomangment(self.driver)
@@ -12,8 +15,6 @@ class Test_all:
         self.obj.test_include_close_checkbox()
         self.obj.test_create_po()
         self.obj.test_reject_po()
-    def test_dashboard(self):
-        self.obj1=Test_Dashboard(self.driver)
-        self.obj1.test_dashboradlanding()
+
 
 
