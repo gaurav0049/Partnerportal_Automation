@@ -11,12 +11,12 @@ from selenium.webdriver.support import expected_conditions as EC
 
 
 
-class Test_Dashboard:
+class Dashboard:
     def __init__(self,driver):
         self.driver=driver
 
 
-    def test_dashboradlanding(self):
+    def dashboradlanding(self):
         #action = ActionChains(self.driver)
         #action.move_to_element(self.driver.find_element(By.XPATH, "//a[normalize-space()='Sign In']")).perform()
         #action.move_to_element(self.driver.find_element(By.CSS_SELECTOR, "[title='Company']")).click().perform()
@@ -26,7 +26,7 @@ class Test_Dashboard:
         #self.driver.find_element(By.CSS_SELECTOR, "[type='submit']").click()
         assert self.driver.title == "Dashboard"
 
-    def test_dashboardcheck(self):
+    def dashboardcheck(self):
         self.driver.implicitly_wait(5)
         date_filter= Select(self.driver.find_element(By.CSS_SELECTOR,"#ChoosePastHistory"))
         date_filter.select_by_visible_text('Last 3 Months')
@@ -40,23 +40,23 @@ class Test_Dashboard:
             if vendor.text == "AUTUMN HARP BUSINESS LIMITED":
                 vendor.click()
                 break
-    def test_removeselectedvendor(self):
+    def removeselectedvendor(self):
         self.driver.find_element(By.CSS_SELECTOR,"button span").click()
         self.driver.find_element(By.CSS_SELECTOR, "[role='textbox']").click()
 
 
-    def test_dashboardtext(self):
+    def dashboardtext(self):
         message= self.driver.find_element(By.TAG_NAME,'h2').text
         assert  message == "Good Morning" or message == "Good Afternoon" or message== "Good Evening"
 
-    def test_customoption(self):
+    def customoption(self):
         date_filtercc = Select(self.driver.find_element(By.CSS_SELECTOR, "#ChoosePastHistory"))
         date_filtercc.select_by_visible_text('Custom Option')
         self.driver.find_element(By.CSS_SELECTOR, "[name='customDateFilter']").clear()
         self.driver.find_element(By.CSS_SELECTOR, "[name='customDateFilter']").send_keys("01/14/2024 - 01/25/2024")
 
 
-    def test_customoption_check(self):
+    def customoption_check(self):
         self.driver.implicitly_wait(5)
         month_Year_left= "Feb 2023"
         month_year_right="Sep 2023"
@@ -90,7 +90,7 @@ class Test_Dashboard:
 
         self.driver.find_element(By.XPATH, '//button[text()="Apply"]').click()
 
-    def test_vendor_acitivity(self):
+    def vendor_acitivity(self):
         #Scrolling to target element :-
         try:
             target = self.driver.find_element(By.XPATH, "//a[text()='Load More']")

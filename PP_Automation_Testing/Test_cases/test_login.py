@@ -5,6 +5,7 @@ from PP_Automation_Testing.Moduless.Test_Pomanagment import Test_Pomangment
 
 @pytest.mark.usefixtures('setup')
 class Test_all:
+    @pytest.mark.second
     def test_dashboard(self):
         self.obj1=Test_Dashboard(self.driver)
         self.obj1.test_dashboradlanding()
