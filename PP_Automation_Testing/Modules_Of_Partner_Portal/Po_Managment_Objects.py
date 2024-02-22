@@ -219,7 +219,8 @@ class Test_Pomangment():
                 break
             NextButton = self.driver.find_element(By.XPATH, "//a[normalize-space()='Next']")
             self.driver.execute_script("arguments[0].scrollIntoView();", NextButton)
-            self.driver.find_element(By.XPATH, "//a[normalize-space()='Next']").click()
+            #self.driver.find_element(By.XPATH, "//a[normalize-space()='Next']").click()
+            NextButton.click()
 
         #po_numbers = self.driver.find_elements(By.XPATH, "//tr")
         #for po_num in po_numbers:
